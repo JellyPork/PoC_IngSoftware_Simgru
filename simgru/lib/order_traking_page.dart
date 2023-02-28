@@ -58,12 +58,11 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
     int nextIndex = polylineCoordinates.indexOf(currentMarkerPosition) + 1;
     if (nextIndex < polylineCoordinates.length) {
       currentMarkerPosition = polylineCoordinates[nextIndex];
-      setState(() {});
     } else {
       polylineCoordinates = List.from(polylineCoordinates.reversed);
       currentMarkerPosition = polylineCoordinates[0];
-      setState(() {});
     }
+    setState(() {});
   }
 
   @override
@@ -94,7 +93,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                   width: 6,
                 )
               },
-              markers: _getMarkers(currentLocation),
+              markers: _getMarkers(context, currentLocation),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -104,17 +103,18 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
     );
   }
 
-  Set<Marker> _getMarkers(LatLng currentLocation) {
+  Set<Marker> _getMarkers(BuildContext context, LatLng currentLocation) {
     Set<Marker> markers = {};
+    // ignore: prefer_const_constructors
     markers.add(Marker(
       markerId: const MarkerId('source'),
       position: sourceLocation,
       infoWindow: const InfoWindow(title: 'Source'),
     ));
-    markers.add(Marker(
-      markerId: const MarkerId('destination'),
+    markers.add(const Marker(
+      markerId: MarkerId('destination'),
       position: destination,
-      infoWindow: const InfoWindow(title: 'Destination'),
+      infoWindow: InfoWindow(title: 'Destination'),
     ));
     markers.add(Marker(
       markerId: const MarkerId('current'),
@@ -122,13 +122,69 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
       infoWindow: const InfoWindow(title: 'You are here'),
     ));
-    markers.add(Marker(
-      markerId: const MarkerId('moving'),
-      position: currentMarkerPosition,
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-      infoWindow: const InfoWindow(title: 'Bus route moving'),
-    ));
+    markers.add(
+      Marker(
+        markerId: const MarkerId('moving'),
+        position: currentMarkerPosition,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+        infoWindow: const InfoWindow(title: 'Bus route moving'),
+        onTap: () {
+          showBusRouteInfoSheet(context);
+        },
+      ),
+    );
     return markers;
+  }
+
+  void showBusRouteInfoSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          child: Container(
+            height: 220,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                const Text(
+                  'Ruta de Camion',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Route Name: Ruta 09 2.0',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Tiempo de llegada a destino: 17 minutos',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Numero de Unidades: 5',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Tiempo entre Unidades: 10 minutes',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _checkLocationPermission() async {
