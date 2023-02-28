@@ -1,6 +1,6 @@
 {
-    "name": "simgru",
-    "short_name": "simgru",
+    "name": "google_mao",
+    "short_name": "google_mao",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
