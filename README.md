@@ -6,6 +6,17 @@ GPbuS es una aplicación móvil diseñada para mostrar información de rutas de 
 ## Descripción
 La aplicación de Rutas de Transporte Público se ha diseñado utilizando el patrón de arquitectura Modelo-Vista-Controlador (MVC). Esta aplicación contiene dos tipos de usuarios: los clientes y los administradores. Los clientes pueden acceder a la información de las rutas de transporte público, visualizar el mapa de la ciudad con la ubicación de los transportes y recibir notificaciones sobre los cambios de ruta. Por otro lado, los administradores pueden gestionar la información de los usuarios, realizar cambios en la información de las rutas y actualizar los datos de los transportes.
 
+## Diseño y Arquitectura
+La aplicación de Rutas de Transporte Público se ha diseñado para ofrecer una experiencia de usuario intuitiva y sencilla. Esta aplicación está construida usando Flutter como Frontend y NodeJS para el servidor. Esta aplicación también se conecta a una API de Google Maps para obtener la ubicación y crear la interfaz de usuario.
+
+Para almacenar los datos necesarios para el funcionamiento de esta aplicación, se utiliza una base de datos MySQL. Esta base de datos se conecta al servidor NodeJS para proporcionar los datos a la aplicación. La aplicación también se conecta al servidor para realizar tareas como el registro de usuarios, la gestión de usuarios y la actualización de la información de las rutas.
+
+Esta aplicación está diseñada para ser escalable, segura y fácil de mantener. Para garantizar la seguridad de los datos, la aplicación utiliza una capa de seguridad basada en protocolos HTTPS. Esta capa de seguridad también se encarga de proteger la información de los usuarios almacenada en la base de datos.
+
+En resumen, el diseño y la arquitectura de esta aplicación están diseñados para ofrecer una experiencia de usuario intuitiva, segura y escalable. La aplicación está construida utilizando Flutter para el Frontend, NodeJS para el servidor y MySQL para la base de datos. Esta aplicación también se conecta a una API de Google Maps para obtener la ubicación y crear la interfaz de usuario.
+
+![Diagrama_Implementacion](https://github.com/JellyPork/PoC_IngSoftware_Simgru/blob/main/resources/Diagrama_Implementacion.png)
+
 ## Tecnologías
 Rutas de Transporte Público fue creado utilizando Flutter/Dart.
 
